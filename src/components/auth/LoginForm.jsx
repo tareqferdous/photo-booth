@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import Field from "../common/Field";
 
 const LoginForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -15,33 +19,38 @@ const LoginForm = () => {
     <div className="bg-white p-6 border border-gray-300 mb-3 rounded-md">
       <form onSubmit={handleSubmit(submitForm)}>
         {/* Username/Email Field */}
-        <div className="mb-3">
+        <Field error={errors.username}>
           <input
             type="text"
             name="username"
+            id="username"
             className="form-input"
             placeholder="Phone number, username, or email"
             {...register("username", { required: "Username is required" })}
           />
-        </div>
+        </Field>
 
         {/* Password Field */}
 
-        <div className="relative mb-3">
-          <input
-            type="password"
-            name="password"
-            className="form-input"
-            placeholder="Password"
-            {...register("password", { required: "Password is required" })}
-          />
-          <button
-            type="button"
-            className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 text-xs"
-          >
-            Show
-          </button>
-        </div>
+        <Field error={errors.password}>
+          <div className="relative m-0 p-0">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              id="password"
+              className="form-input"
+              placeholder="Password"
+              {...register("password", { required: "Password is required" })}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 text-xs cursor-pointer"
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
+        </Field>
 
         {/* Login Button */}
         <div className="mb-4">

@@ -43,6 +43,7 @@ body {
   border-radius: 4px;
   background-color: #fafafa;
   font-size: 14px;
+  margin: 0;
 }
 .form-input:focus {
   outline: none;

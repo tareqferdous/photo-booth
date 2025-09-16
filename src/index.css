@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+@layer utilities {
+  .form-control {
+    @apply mb-3 space-y-2.5;
+  }
+  .auth-label {
+    @apply leading-[138%] lg:text-lg;
+  }
+}

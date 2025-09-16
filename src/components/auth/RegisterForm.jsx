@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import Field from "../common/Field";
 
 const RegisterForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -20,75 +24,69 @@ const RegisterForm = () => {
       </h2>
 
       <form onSubmit={handleSubmit(submitForm)}>
-        {/* Email/Phone Field */}
-        <div className="mb-2">
-          <div className="relative">
-            <input
-              type="email"
-              name="email"
-              className="form-input"
-              placeholder="Email"
-              aria-label="Email"
-              {...register("email", { required: "Email is required" })}
-            />
-          </div>
-        </div>
+        <Field className="relative">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className="form-input"
+            placeholder="Email"
+            {...register("email", { required: "Email is required" })}
+          />
+        </Field>
 
-        {/* Full Name Field */}
-        <div className="mb-2">
-          <div className="relative">
-            <input
-              type="text"
-              name="fullName"
-              className="form-input"
-              placeholder="Full Name"
-              aria-label="Full Name"
-              {...register("fullName", { required: "Full Name is required" })}
-            />
-          </div>
-        </div>
+        <Field error={errors.fullName}>
+          <input
+            type="text"
+            name="fullName"
+            id="fullName"
+            className="form-input"
+            placeholder="Full Name"
+            {...register("fullName", { required: "Full Name is required" })}
+          />
+        </Field>
 
         {/* Password Field */}
-        <div className="mb-3">
-          <div className="relative">
+        <Field error={errors.password}>
+          <div className="relative m-0 p-0">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               className="form-input"
               placeholder="Password"
-              aria-label="Password"
               {...register("password", { required: "Password is required" })}
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 text-xs"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 text-xs cursor-pointer"
             >
-              Show
+              {showPassword ? "Hide" : "Show"}
             </button>
           </div>
-        </div>
+        </Field>
 
         {/* Confirm Password Field */}
-        <div className="mb-3">
-          <div className="relative">
+        <Field error={errors.confirmPassword}>
+          <div className="relative m-0 p-0">
             <input
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
               className="form-input"
               placeholder="Confirm Password"
-              aria-label="Confirm Password"
               {...register("confirmPassword", {
                 required: "Confirm Password is required",
               })}
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 text-xs"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 text-xs cursor-pointer"
             >
-              Show
+              {showConfirmPassword ? "Hide" : "Show"}
             </button>
           </div>
-        </div>
+        </Field>
 
         {/* Sign Up Button */}
         <div className="mb-2">
