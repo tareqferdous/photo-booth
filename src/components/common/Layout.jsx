@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
+import Logout from "../auth/Logout";
 import Logo from "../layout/Logo";
-import Logout from "../layout/Logout";
 import NavOptions from "../layout/NavOptions";
 import UserInfo from "../layout/UserInfo";
 
