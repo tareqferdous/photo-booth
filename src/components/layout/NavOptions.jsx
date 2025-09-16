@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 const NavOptions = () => {
   return (
     <ul className="space-y-8 flex-1">
       <li>
-        <a href="./index.html" className="flex flex-row items-center gap-2">
+        <Link to="/" className="flex flex-row items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 stroke-zinc-800"
@@ -17,14 +19,11 @@ const NavOptions = () => {
             />
           </svg>
           <span className="text-sm text-zinc-800">Home</span>
-        </a>
+        </Link>
       </li>
 
       <li>
-        <a
-          href="./notification.html"
-          className="flex flex-row items-center gap-2"
-        >
+        <Link to="/notifications" className="flex flex-row items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 stroke-zinc-800"
@@ -40,13 +39,10 @@ const NavOptions = () => {
             />
           </svg>
           <span className="text-xs">Notifications</span>
-        </a>
+        </Link>
       </li>
       <li>
-        <a
-          href="./create-post.html"
-          className="flex flex-row items-center gap-2"
-        >
+        <Link to="/create-post" className="flex flex-row items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 stroke-zinc-800"
@@ -62,11 +58,11 @@ const NavOptions = () => {
             />
           </svg>
           <span className="text-xs">Create</span>
-        </a>
+        </Link>
       </li>
 
       <li>
-        <a href="./profile.html" className="flex flex-row items-center gap-2">
+        <Link to="/profile" className="flex flex-row items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -83,7 +79,7 @@ const NavOptions = () => {
             <circle cx="12" cy="7" r="4" />
           </svg>
           <span className="text-xs">Profile</span>
-        </a>
+        </Link>
       </li>
     </ul>
   );

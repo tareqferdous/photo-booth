@@ -3,3 +3,4 @@
 {"name":"John Doe","email":"john@example.com","password":"$2b$10$r.Pep3QTwt9zPgr4CtjeH.NiUMY0/sMWqooXHzykHmQPy8fYgLvHC","avatar":null,"bio":"","createdAt":{"$$date":1749619607469},"_id":"bZwf4WBPLJtnTGtr"}
 {"name":"Sumit Saha","email":"sumit@learnwithsumit.com","password":"$2b$10$.iTFmOp7bq9/qVxIuVesOewwhLcypap4QHJpNYwZYx8HRs7uPAGj6","avatar":"uploads/a1f3ba38-f344-473b-a92c-709db7bf25d3.png","bio":"Father | Entrepreneur | Educator | Programming Enthusiast","createdAt":{"$$date":1749617404679},"_id":"imzy7nVeUHUHAZAn","website":"https://www.facebook.com/sumit.analyzen","gender":"male"}
 {"$$indexCreated":{"fieldName":"email","unique":true,"sparse":false}}
+{"name":"Tareq Ferdous","email":"tareq@gmail.com","password":"$2b$10$kZ.5h1OQwsLuvt.IUzEJfO5j07/9aKPjXDFJrsIb3eFUDR5bI/kaW","avatar":null,"bio":"","createdAt":{"$$date":1757987534784},"_id":"0bkRIvtT4luNFRMU"}
