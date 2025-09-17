@@ -42,7 +42,7 @@ export const PopupProvider = ({ children }) => {
                 Your session has expired. Please log in again.
               </p>
               <button onClick={handleCloseSession} class="primary-button mb-3">
-                Continue
+                Login
               </button>
             </div>
           </div>

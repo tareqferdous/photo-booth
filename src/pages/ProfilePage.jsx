@@ -6,6 +6,7 @@ import useAxios from "../hooks/useAxios";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -17,9 +18,15 @@ const ProfilePage = () => {
     const fetchProfile = async () => {
       try {
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/users/me`
+          `${import.meta.env.VITE_SERVER_BASE_URL}/posts/user/${
+            auth?.user?._id
+          }`
         );
-        setUser(response?.data);
+
+        if (response.status === 200) {
+          setUser(response?.data?.user);
+          setPosts(response?.data?.posts);
+        }
       } catch (error) {
         console.error(error);
         setError(error);
@@ -30,11 +37,12 @@ const ProfilePage = () => {
 
     fetchProfile();
   }, []);
+
   return (
     <div className="main-container">
       <div className="profile-container">
         {/* Profile Header  */}
-        <ProfileHeader user={user} />
+        <ProfileHeader user={user} posts={posts} />
 
         <section>
           <h3 className="font-semibold text-lg mb-4">Posts</h3>
