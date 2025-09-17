@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 import Field from "../common/Field";
 
 const LoginForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -12,8 +12,17 @@ const LoginForm = () => {
     setError,
   } = useForm();
 
+  const navigate = useNavigate();
+  const { setAuth } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const location = useLocation();
+
+  const from = location?.state?.from || "/";
+
   const submitForm = (formData) => {
-    console.log(formData);
+    const user = { ...formData };
+    setAuth({ user });
+    navigate(from);
   };
   return (
     <div className="bg-white p-6 border border-gray-300 mb-3 rounded-md">

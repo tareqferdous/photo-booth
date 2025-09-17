@@ -9,6 +9,9 @@ import NotificationPage from "./pages/NotificationPage";
 import PostDetailsPage from "./pages/PostDetailsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegistrationPage from "./pages/RegistrationPage";
+import AuthProvider from "./providers/AuthProvider";
+import PrivateRoute from "./route/PrivateRoute";
+import PublicRoute from "./route/PublicRoute";
 
 const router = createBrowserRouter([
   {
@@ -21,38 +24,70 @@ const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <ProfilePage />,
+        element: (
+          <PrivateRoute>
+            <ProfilePage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "edit-profile",
-        element: <EditProfilePage />,
+        element: (
+          <PrivateRoute>
+            <EditProfilePage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "create-post",
-        element: <CreatePostPage />,
+        element: (
+          <PrivateRoute>
+            <CreatePostPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "post-details",
-        element: <PostDetailsPage />,
+        element: (
+          <PrivateRoute>
+            <PostDetailsPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "notifications",
-        element: <NotificationPage />,
+        element: (
+          <PrivateRoute>
+            <NotificationPage />
+          </PrivateRoute>
+        ),
       },
     ],
   },
   {
     path: "register",
-    element: <RegistrationPage />,
+    element: (
+      <PublicRoute>
+        <RegistrationPage />
+      </PublicRoute>
+    ),
   },
   {
     path: "login",
-    element: <LoginPage />,
+    element: (
+      <PublicRoute>
+        <LoginPage />
+      </PublicRoute>
+    ),
   },
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 }
 
 export default App;

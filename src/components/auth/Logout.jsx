@@ -1,6 +1,16 @@
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+
 const Logout = () => {
+  const navigate = useNavigate();
+  const { setAuth } = useAuth();
+
+  const handleLogout = () => {
+    setAuth({});
+    navigate("/login");
+  };
   return (
-    <button title="logout" className="">
+    <button title="logout" className="cursor-pointer" onClick={handleLogout}>
       <svg
         className="h-4 w-4"
         viewBox="0 0 24 24"
