@@ -3,7 +3,7 @@ import { useAuth } from "../hooks/useAuth";
 
 const PublicRoute = ({ children }) => {
   const { auth } = useAuth();
-  return !auth?.user?.username ? children : <Navigate to="/" />;
+  return !auth?.accessToken ? children : <Navigate to="/" />;
 };
 
 export default PublicRoute;

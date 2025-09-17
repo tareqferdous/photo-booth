@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -17,12 +18,28 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();
 
-  const from = location?.state?.from || "/";
+  const from = location.state?.from || "/";
 
-  const submitForm = (formData) => {
-    const user = { ...formData };
-    setAuth({ user });
-    navigate(from);
+  const submitForm = async (formData) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/auth/login`,
+        formData
+      );
+      if (response.status === 200) {
+        const { user, accessToken, refreshToken } = response.data;
+        if (user && accessToken && refreshToken) {
+          setAuth({ user, accessToken, refreshToken });
+          navigate(from);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      setError("root.random", {
+        type: "random",
+        message: `User with email ${formData.email} is not found`,
+      });
+    }
   };
   return (
     <div className="bg-white p-6 border border-gray-300 mb-3 rounded-md">
@@ -31,11 +48,11 @@ const LoginForm = () => {
         <Field error={errors.username}>
           <input
             type="text"
-            name="username"
-            id="username"
+            name="email"
+            id="email"
             className="form-input"
-            placeholder="Phone number, username, or email"
-            {...register("username", { required: "Username is required" })}
+            placeholder="Enter your email"
+            {...register("email", { required: "Email is required" })}
           />
         </Field>
 
@@ -61,9 +78,13 @@ const LoginForm = () => {
           </div>
         </Field>
 
+        <small className="text-red-600 m-0 p-0">
+          {errors.root?.random?.message}
+        </small>
+
         {/* Login Button */}
         <div className="mb-4">
-          <button type="submit" className="login-button">
+          <button type="submit" className="login-button cursor-pointer">
             Log in
           </button>
         </div>

@@ -1,7 +1,7 @@
 import User1 from "../../assets/users/user-1.png";
 import ProfileInfo from "./ProfileInfo";
 
-const ProfileHeader = () => {
+const ProfileHeader = ({ user }) => {
   return (
     <div className="flex flex-col md:flex-row mb-10">
       {/* Profile Picture */}
@@ -16,7 +16,7 @@ const ProfileHeader = () => {
       </div>
 
       {/* Profile Info */}
-      <ProfileInfo />
+      <ProfileInfo user={user} />
     </div>
   );
 };

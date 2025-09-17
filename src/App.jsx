@@ -10,6 +10,7 @@ import PostDetailsPage from "./pages/PostDetailsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegistrationPage from "./pages/RegistrationPage";
 import AuthProvider from "./providers/AuthProvider";
+import { PopupProvider } from "./providers/PopupProvider";
 import PrivateRoute from "./route/PrivateRoute";
 import PublicRoute from "./route/PublicRoute";
 
@@ -85,7 +86,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <AuthProvider>
-      <RouterProvider router={router} />
+      <PopupProvider>
+        <RouterProvider router={router} />
+      </PopupProvider>
     </AuthProvider>
   );
 }
