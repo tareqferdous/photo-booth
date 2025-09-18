@@ -38,23 +38,23 @@ const ProfilePage = () => {
     fetchProfile();
   }, []);
 
+  const isMe = auth?.user?._id === user?._id;
+
   return (
     <div className="main-container">
       <div className="profile-container">
         {/* Profile Header  */}
-        <ProfileHeader user={user} posts={posts} />
+        <ProfileHeader user={user} posts={posts} isMe={isMe} />
 
         <section>
           <h3 className="font-semibold text-lg mb-4">Posts</h3>
           {/* Photo Grid */}
           <div className="grid grid-cols-3 gap-1">
-            {/* Grid Item 1 */}
-            <ProfilePost />
-            <ProfilePost />
-            <ProfilePost />
-            <ProfilePost />
-            <ProfilePost />
-            <ProfilePost />
+            {posts.length > 0 ? (
+              posts.map((post) => <ProfilePost key={post._id} post={post} />)
+            ) : (
+              <p>No posts available</p>
+            )}
           </div>
         </section>
       </div>

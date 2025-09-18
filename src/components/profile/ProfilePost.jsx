@@ -1,11 +1,15 @@
-import Post1 from "../../assets/articles/post-1.jpg";
-const ProfilePost = () => {
+import { Link } from "react-router-dom";
+const ProfilePost = ({ post }) => {
   return (
-    <a href="./post-details.html">
+    <Link to="/post-details">
       <div className="relative">
-        <img src={Post1} alt="Post" className="w-full grid-image" />
+        <img
+          src={`${import.meta.env.VITE_BASE_URL}/${post?.image}`}
+          alt="Post"
+          className="w-full grid-image"
+        />
       </div>
-    </a>
+    </Link>
   );
 };
 

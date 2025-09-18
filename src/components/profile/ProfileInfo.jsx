@@ -1,4 +1,6 @@
-const ProfileInfo = ({ user, posts }) => {
+import { Link } from "react-router-dom";
+
+const ProfileInfo = ({ user, posts, isMe }) => {
   return (
     <div className="md:w-2/3">
       {/* Username and Buttons */}
@@ -7,14 +9,16 @@ const ProfileInfo = ({ user, posts }) => {
           {user?.name}
         </h2>
       </div>
-      <div className="flex space-x-2">
-        <a
-          href="./edit-profile.html"
-          className="bg-gray-100 px-4 py-1.5 rounded-md text-sm font-medium"
-        >
-          Edit profile
-        </a>
-      </div>
+      {isMe && (
+        <div className="flex space-x-2">
+          <Link
+            to="/edit-profile"
+            className="bg-gray-100 px-4 py-1.5 rounded-md text-sm font-medium"
+          >
+            Edit profile
+          </Link>
+        </div>
+      )}
 
       {/* Stats */}
       <div className="flex justify-center sm:justify-start space-x-8 mb-4 mt-2">
@@ -25,7 +29,7 @@ const ProfileInfo = ({ user, posts }) => {
 
       {/* Bio */}
       <div className="text-sm">
-        <p>Pain Demands to be Felt</p>
+        <p>{user?.bio}</p>
         <p className="text-blue-900">
           <a
             href="https://saadh393.github.io"
@@ -46,7 +50,7 @@ const ProfileInfo = ({ user, posts }) => {
                 d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
               />
             </svg>
-            saadh393.github.io
+            {user?.website}
           </a>
         </p>
       </div>
