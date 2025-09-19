@@ -1,20 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { actions } from "../actions";
 import ProfileHeader from "../components/profile/ProfileHeader";
 import ProfilePost from "../components/profile/ProfilePost";
 import { useAuth } from "../hooks/useAuth";
 import useAxios from "../hooks/useAxios";
+import { useProfile } from "../hooks/useProfile";
 
 const ProfilePage = () => {
-  const [user, setUser] = useState(null);
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
   const { api } = useAxios();
   const { auth } = useAuth();
+  const { state, dispatch } = useProfile();
 
   useEffect(() => {
-    setLoading(true);
+    dispatch({ type: actions.profile.DATA_FETCHING });
     const fetchProfile = async () => {
       try {
         const response = await api.get(
@@ -24,34 +22,35 @@ const ProfilePage = () => {
         );
 
         if (response.status === 200) {
-          setUser(response?.data?.user);
-          setPosts(response?.data?.posts);
+          dispatch({ type: actions.profile.DATA_FETCHED, data: response.data });
         }
       } catch (error) {
-        console.error(error);
-        setError(error);
-      } finally {
-        setLoading(false);
+        dispatch({
+          type: actions.profile.DATA_FETCH_ERROR,
+          error: error.message,
+        });
       }
     };
 
     fetchProfile();
   }, []);
 
-  const isMe = auth?.user?._id === user?._id;
+  const isMe = auth?.user?._id === state?.user?._id;
 
   return (
     <div className="main-container">
       <div className="profile-container">
         {/* Profile Header  */}
-        <ProfileHeader user={user} posts={posts} isMe={isMe} />
+        <ProfileHeader user={state?.user} posts={state?.posts} isMe={isMe} />
 
         <section>
           <h3 className="font-semibold text-lg mb-4">Posts</h3>
           {/* Photo Grid */}
           <div className="grid grid-cols-3 gap-1">
-            {posts.length > 0 ? (
-              posts.map((post) => <ProfilePost key={post._id} post={post} />)
+            {state?.posts.length > 0 ? (
+              state.posts.map((post) => (
+                <ProfilePost key={post._id} post={post} />
+              ))
             ) : (
               <p>No posts available</p>
             )}

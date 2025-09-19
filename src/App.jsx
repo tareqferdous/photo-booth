@@ -11,6 +11,7 @@ import ProfilePage from "./pages/ProfilePage";
 import RegistrationPage from "./pages/RegistrationPage";
 import AuthProvider from "./providers/AuthProvider";
 import { PopupProvider } from "./providers/PopupProvider";
+import ProfileProvider from "./providers/ProfileProvider";
 import PrivateRoute from "./route/PrivateRoute";
 import PublicRoute from "./route/PublicRoute";
 
@@ -87,7 +88,9 @@ function App() {
   return (
     <AuthProvider>
       <PopupProvider>
-        <RouterProvider router={router} />
+        <ProfileProvider>
+          <RouterProvider router={router} />
+        </ProfileProvider>
       </PopupProvider>
     </AuthProvider>
   );
