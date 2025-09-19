@@ -1,7 +1,6 @@
 import ProfileInfo from "./ProfileInfo";
 
 const ProfileHeader = ({ user, posts, isMe }) => {
-  console.log(user);
   return (
     <div className="flex flex-col md:flex-row mb-10">
       {/* Profile Picture */}

@@ -3,7 +3,6 @@ import { useAuth } from "../hooks/useAuth";
 
 const HomePage = () => {
   const { auth } = useAuth();
-  console.log(auth);
   return (
     <div className="max-w-6xl mx-auto w-full py-10">
       <Post />
