@@ -31,11 +31,7 @@ const ProfileInfo = ({ user, posts, isMe }) => {
       <div className="text-sm">
         <p>{user?.bio}</p>
         <p className="text-blue-900">
-          <a
-            href="https://saadh393.github.io"
-            target="_blank"
-            className="flex items-center"
-          >
+          <a href={user?.website} target="_blank" className="flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-3 w-3 mr-1"

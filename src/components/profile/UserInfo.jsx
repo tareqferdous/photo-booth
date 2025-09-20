@@ -1,4 +1,4 @@
-const UserInfo = () => {
+const UserInfo = ({ bio, setBio, website, setWebsite, gender, setGender }) => {
   return (
     <>
       <div className="bg-white rounded-lg p-6 mb-6">
@@ -6,7 +6,8 @@ const UserInfo = () => {
         <input
           type="text"
           className="form-input mb-2"
-          value="saadh393.github.io"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
         />
         <p className="text-gray-500 text-xs">
           Editing your links is only available on mobile. Visit the PhotoBooth
@@ -17,9 +18,14 @@ const UserInfo = () => {
       {/* Bio Section  */}
       <div className="bg-white rounded-lg p-6 mb-6">
         <label className="block mb-2 font-medium">Bio</label>
-        <textarea className="form-input resize-none h-24 mb-1">
-          Pain Demands to be Felt
+        <textarea
+          className="form-input resize-none h-24 mb-1"
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
+        >
+          {bio}
         </textarea>
+
         <div className="flex justify-end">
           <span className="text-gray-500 text-xs">23 / 150</span>
         </div>
@@ -29,7 +35,11 @@ const UserInfo = () => {
       <div className="bg-white rounded-lg p-6 mb-6">
         <label className="block mb-2 font-medium">Gender</label>
         <div className="relative">
-          <select className="form-input appearance-none pr-8">
+          <select
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+            className="form-input appearance-none pr-8"
+          >
             <option>Male</option>
             <option>Female</option>
             <option>Prefer not to say</option>
