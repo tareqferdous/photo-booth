@@ -33,7 +33,7 @@ const ProfilePage = () => {
     };
 
     fetchProfile();
-  }, []);
+  }, [api, auth?.user?._id, dispatch]);
 
   const isMe = auth?.user?._id === state?.user?._id;
 

@@ -5,7 +5,7 @@ const UserInfo = () => {
   const { auth } = useAuth();
   const { state } = useProfile();
 
-  const user = auth?.user ?? state?.user;
+  const user = state?.user ?? auth?.user;
 
   return (
     <Link to="/profile">
