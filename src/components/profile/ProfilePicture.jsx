@@ -39,8 +39,6 @@ const ProfilePicture = () => {
     }
   };
 
-  console.log("user", state?.user);
-
   return (
     <div className="bg-white rounded-lg p-6 mb-6">
       <div className="flex justify-between items-center">
