@@ -1,14 +1,15 @@
-import PostImg from "../../assets/articles/post-1.jpg";
-const PostImage = () => {
+import { Link } from "react-router-dom";
+
+const PostImage = ({ postImageUrl }) => {
   return (
     <div className="relative">
-      <a href="./post-details.html">
+      <Link to="/post-details">
         <img
-          src={PostImg}
+          src={`${import.meta.env.VITE_BASE_URL}/${postImageUrl}`}
           alt="Post image"
           className="w-full object-cover max-h-[1000px]"
         />
-      </a>
+      </Link>
     </div>
   );
 };

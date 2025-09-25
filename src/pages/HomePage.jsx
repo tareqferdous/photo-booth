@@ -97,8 +97,6 @@ const HomePage = () => {
     };
   }, [auth, page, hasMore]);
 
-  console.log("showPopup", showPopup);
-
   return (
     <div className="max-w-6xl mx-auto w-full py-10">
       {posts.map((post) => (
