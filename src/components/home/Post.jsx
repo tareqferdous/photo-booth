@@ -29,7 +29,7 @@ const Post = ({ post }) => {
       <PostLikes />
 
       {/* Caption */}
-      <PostCaption />
+      <PostCaption userName={post?.user?.name} caption={post?.caption} />
 
       {/* Comments */}
       <CommentsCount />
