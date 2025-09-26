@@ -1,19 +1,52 @@
+import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import UserCreationModal from "../../modals/UserCreationModal";
 import Field from "../common/Field";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [registerData, setRegisterData] = useState(null);
+  const [isCreated, setIsCreated] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
     setError,
   } = useForm();
 
-  const submitForm = (data) => {
-    console.log(data);
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+
+  const password = watch("password", ""); // to compare with confirm password
+
+  const submitForm = async (formData) => {
+    delete formData.confirmPassword;
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/auth/signup`,
+        formData
+      );
+      if (response.status === 201) {
+        const { user, accessToken, refreshToken } = response.data;
+        if (user && accessToken && refreshToken) {
+          setAuth({ user, accessToken, refreshToken });
+          setTimeout(() => {
+            navigate("/edit-profile", { replace: true });
+          }, 100);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      setError("root.random", {
+        type: "random",
+        message: error.message,
+      });
+    }
   };
 
   return (
@@ -38,11 +71,11 @@ const RegisterForm = () => {
         <Field error={errors.fullName}>
           <input
             type="text"
-            name="fullName"
-            id="fullName"
+            name="name"
+            id="name"
             className="form-input"
             placeholder="Full Name"
-            {...register("fullName", { required: "Full Name is required" })}
+            {...register("name", { required: "Full Name is required" })}
           />
         </Field>
 
@@ -54,7 +87,13 @@ const RegisterForm = () => {
               name="password"
               className="form-input"
               placeholder="Password"
-              {...register("password", { required: "Password is required" })}
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
             />
             <button
               type="button"
@@ -76,6 +115,8 @@ const RegisterForm = () => {
               placeholder="Confirm Password"
               {...register("confirmPassword", {
                 required: "Confirm Password is required",
+                validate: (value) =>
+                  value === password || "Passwords do not match",
               })}
             />
             <button
@@ -88,6 +129,10 @@ const RegisterForm = () => {
           </div>
         </Field>
 
+        <small className="text-red-600 m-0 p-0">
+          {errors.root?.random?.message}
+        </small>
+
         {/* Sign Up Button */}
         <div className="mb-2">
           <button type="submit" className="login-button">
@@ -95,6 +140,13 @@ const RegisterForm = () => {
           </button>
         </div>
       </form>
+      {isCreated && (
+        <UserCreationModal
+          navigate={navigate}
+          setAuth={setAuth}
+          registerData={registerData}
+        />
+      )}
     </div>
   );
 };

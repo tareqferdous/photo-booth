@@ -18,7 +18,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();
 
-  const from = location.state?.from || "/";
+  // const from = location.state?.from || "/edit-profile";
 
   const submitForm = async (formData) => {
     try {
@@ -30,6 +30,7 @@ const LoginForm = () => {
         const { user, accessToken, refreshToken } = response.data;
         if (user && accessToken && refreshToken) {
           setAuth({ user, accessToken, refreshToken });
+          const from = location.state?.from || "/edit-profile";
           navigate(from);
         }
       }

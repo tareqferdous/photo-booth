@@ -1,12 +1,16 @@
 import { useRef } from "react";
 import { actions } from "../../actions";
+import { useAuth } from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
 import { useProfile } from "../../hooks/useProfile";
 
 const ProfilePicture = () => {
   const { state, dispatch } = useProfile();
+  const { auth } = useAuth();
   const { api } = useAxios();
   const fileUploaderRef = useRef();
+
+  const user = state?.user ?? auth?.user;
 
   const handleImageUpload = (event) => {
     event.preventDefault();
@@ -53,8 +57,8 @@ const ProfilePicture = () => {
             />
           </div>
           <div>
-            <h2 className="font-semibold text-base">Saad Hasan</h2>
-            <p className="text-gray-500">@saadh393</p>
+            <h2 className="font-semibold text-base">{user?.name}</h2>
+            <p className="text-gray-500">{user?.email}</p>
           </div>
         </div>
         <form id="form" encType="multipart/form-data">

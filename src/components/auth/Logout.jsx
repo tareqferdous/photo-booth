@@ -6,7 +6,7 @@ const Logout = () => {
   const { setAuth } = useAuth();
 
   const handleLogout = () => {
-    setAuth({});
+    setAuth(null);
     navigate("/login");
   };
   return (
