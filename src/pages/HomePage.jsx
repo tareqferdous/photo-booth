@@ -38,7 +38,11 @@ const HomePage = () => {
 
     const onIntersection = (items) => {
       const popupLoader = items[0];
-      if (popupLoader.isIntersecting && !auth?.user?._id) {
+      if (
+        popupLoader.isIntersecting &&
+        !auth?.user?._id &&
+        window.scrollY > 200
+      ) {
         setShowPopup(true);
       }
     };
@@ -96,6 +100,8 @@ const HomePage = () => {
       if (observer) observer.disconnect();
     };
   }, [auth, page, hasMore]);
+
+  console.log("showPopup", showPopup);
 
   return (
     <div className="max-w-6xl mx-auto w-full py-10">
