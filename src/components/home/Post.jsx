@@ -11,31 +11,37 @@ const Post = ({ post }) => {
   const { avatarUrl } = useAvatar(post);
   console.log(post);
   return (
-    <article className="border border-gray-200 pb-4 mb-4 max-w-[560px] mx-auto rounded-md">
-      {/* Post Header */}
-      <PostHeader
-        avatarUrl={avatarUrl}
-        createdAt={post?.createdAt}
-        userName={post?.user?.name}
-      />
+    <>
+      <article className="border border-gray-200 pb-4 mb-4 max-w-[560px] mx-auto rounded-md">
+        {/* Post Header */}
+        <PostHeader
+          avatarUrl={avatarUrl}
+          createdAt={post?.createdAt}
+          userName={post?.user?.name}
+        />
 
-      {/* Post Image */}
-      <PostImage postImageUrl={post.image} />
+        {/* Post Image */}
+        <PostImage postImageUrl={post.image} />
 
-      {/* Post Actions */}
-      <PostAction />
+        {/* Post Actions */}
+        <PostAction />
 
-      {/* Likes */}
-      <PostLikes />
+        {/* Likes */}
+        {post?.likesCount > 0 && (
+          <PostLikes likesCount={post?.likesCount} likes={post?.likes} />
+        )}
 
-      {/* Caption */}
-      <PostCaption userName={post?.user?.name} caption={post?.caption} />
+        {/* Caption */}
+        <PostCaption userName={post?.user?.name} caption={post?.caption} />
 
-      {/* Comments */}
-      <CommentsCount />
-      {/* Add Comment */}
-      <AddComment />
-    </article>
+        {/* Comments */}
+        {post?.commentsCount > 0 && (
+          <CommentsCount allComments={post?.commentsCount} />
+        )}
+        {/* Add Comment */}
+        <AddComment />
+      </article>
+    </>
   );
 };
 
