@@ -5,7 +5,7 @@ const Field = ({ label, children, htmlFor, error }) => {
   return (
     <div className="form-control">
       {label && (
-        <label htmlFor={id} className="auth-label">
+        <label htmlFor={id} className="auth-label ">
           {label}
         </label>
       )}
