@@ -104,7 +104,12 @@ const HomePage = () => {
   return (
     <div className="max-w-6xl mx-auto w-full py-10">
       {posts.map((post) => (
-        <Post key={post.id} post={post} />
+        <Post
+          key={post.id}
+          post={post}
+          showPopup={showPopup}
+          setShowPopup={setShowPopup}
+        />
       ))}
 
       {/* Unauthorized popup trigger sentinel */}

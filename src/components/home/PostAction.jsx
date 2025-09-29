@@ -1,12 +1,44 @@
-const PostAction = () => {
+import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
+
+const PostAction = ({ post, showPopup, setShowPopup }) => {
+  const { api } = useAxios();
+  const { auth } = useAuth();
+  // Check if logged-in user liked the post
+  const isInitiallyLiked = post.likes.some(
+    (like) => like._id === auth?.user?._id
+  );
+  const [liked, setLiked] = useState(isInitiallyLiked);
+  const handleLike = async () => {
+    if (!auth?.user?._id) {
+      setShowPopup(!showPopup);
+      return;
+    }
+    try {
+      const response = await api.post(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/posts/${post?._id}/like`
+      );
+
+      if (response.status === 200) {
+        setLiked(true);
+      }
+    } catch (error) {
+      console.error(error);
+      setLiked(false);
+    }
+  };
+
   return (
     <div className="flex justify-between p-3">
       <div className="flex space-x-4">
-        <button className="like-button">
+        <button onClick={handleLike} className="like-button">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 stroke-zinc-600"
-            fill="none"
+            className={`h-6 w-6 ${
+              liked ? "fill-red-500 stroke-red-500" : "stroke-zinc-600"
+            }`}
+            fill={liked ? "red" : "none"}
             viewBox="0 0 24 24"
             stroke="currentColor"
           >

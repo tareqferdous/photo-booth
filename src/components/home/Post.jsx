@@ -7,7 +7,7 @@ import PostHeader from "./PostHeader";
 import PostImage from "./PostImage";
 import PostLikes from "./PostLikes";
 
-const Post = ({ post }) => {
+const Post = ({ post, showPopup, setShowPopup }) => {
   const { avatarUrl } = useAvatar(post);
   console.log(post);
   return (
@@ -24,7 +24,11 @@ const Post = ({ post }) => {
         <PostImage postImageUrl={post.image} />
 
         {/* Post Actions */}
-        <PostAction />
+        <PostAction
+          post={post}
+          showPopup={showPopup}
+          setShowPopup={setShowPopup}
+        />
 
         {/* Likes */}
         {post?.likesCount > 0 && (
