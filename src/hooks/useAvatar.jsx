@@ -5,8 +5,6 @@ export const useAvatar = (post) => {
   const { state } = useProfile();
 
   const isMe = state?.user?._id === post?.user?._id;
-  console.log("state", state?.user?.avatar);
-  console.log("post", post?.user?.avatar);
 
   const avatar = isMe ? `${state?.user?.avatar}` : `${post?.user?.avatar}`;
 

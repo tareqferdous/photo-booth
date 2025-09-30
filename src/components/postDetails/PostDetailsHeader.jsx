@@ -1,6 +1,6 @@
-import Author from "../../assets/articles/author-1.svg";
+import { getDateDifference } from "../../utils/index.js";
 
-const PostDetailsHeader = () => {
+const PostDetailsHeader = ({ userInfo }) => {
   return (
     <div className="flex items-center justify-between p-3 border-b border-gray-200">
       <a href="./profile.html">
@@ -8,7 +8,7 @@ const PostDetailsHeader = () => {
           <div className="w-8 h-8 rounded-full overflow-hidden">
             <div className="w-full h-full rounded-full overflow-hidden bg-white">
               <img
-                src={Author}
+                src={`${import.meta.env.VITE_BASE_URL}/${userInfo?.avatar}`}
                 alt="User avatar"
                 className="w-full h-full object-cover rounded-full"
               />
@@ -16,11 +16,11 @@ const PostDetailsHeader = () => {
           </div>
           <div className="ml-2">
             <div className="flex items-center">
-              <span className="font-semibold text-sm">Learn with Sumit</span>
+              <span className="font-semibold text-sm">{userInfo?.name}</span>
             </div>
             <div className="flex items-center">
               <span className="text-[10px] text-gray-600">
-                June 9, 2025 08:00 PM
+                {getDateDifference(userInfo?.createdAt)}
               </span>
             </div>
           </div>

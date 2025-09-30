@@ -1,9 +1,11 @@
-import Post1 from "../../assets/articles/post-1.jpg";
-
-const PostImage = () => {
+const PostImage = ({ image }) => {
   return (
     <div className="w-full md:w-1/2 bg-black flex items-center">
-      <img src={Post1} alt="Post image" className="w-full post-image" />
+      <img
+        src={`${import.meta.env.VITE_BASE_URL}/${image}`}
+        alt="Post image"
+        className="w-full post-image"
+      />
     </div>
   );
 };

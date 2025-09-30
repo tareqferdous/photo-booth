@@ -1,4 +1,9 @@
-const PostActions = () => {
+import { getDateDifference } from "../../utils/index.js";
+import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
+
+const PostActions = ({ likes, postTime, postId }) => {
   return (
     <div className="p-3 border-b border-gray-200">
       <div className="flex justify-between mb-2">
@@ -56,12 +61,16 @@ const PostActions = () => {
 
       {/* Likes */}
       <div className="mb-1">
-        <p className="text-sm font-semibold">42 likes</p>
+        <p className="text-sm font-semibold">{`${
+          likes.length > 0
+            ? likes.length + " Likes"
+            : "Be the first to like this post"
+        }`}</p>
       </div>
 
       {/* Post Time */}
       <div className="mb-2">
-        <p className="text-xs text-gray-500">3 hours ago</p>
+        <p className="text-xs text-gray-500">{getDateDifference(postTime)}</p>
       </div>
     </div>
   );
