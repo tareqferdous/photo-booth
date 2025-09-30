@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useAvatar } from "../../hooks/useAvatar";
 import AddComment from "./AddComment";
 import CommentsCount from "./CommentsCount";
@@ -9,7 +10,9 @@ import PostLikes from "./PostLikes";
 
 const Post = ({ post, showPopup, setShowPopup }) => {
   const { avatarUrl } = useAvatar(post);
+  const [comments, setComments] = useState(post?.comments || []);
   console.log(post);
+  console.log("comments", comments);
   return (
     <>
       <article className="border border-gray-200 pb-4 mb-4 max-w-[560px] mx-auto rounded-md">
@@ -39,11 +42,15 @@ const Post = ({ post, showPopup, setShowPopup }) => {
         <PostCaption userName={post?.user?.name} caption={post?.caption} />
 
         {/* Comments */}
-        {post?.commentsCount > 0 && (
-          <CommentsCount allComments={post?.commentsCount} />
-        )}
+        {comments.length > 0 && <CommentsCount allComments={comments.length} />}
         {/* Add Comment */}
-        <AddComment />
+        <AddComment
+          post={post}
+          showPopup={showPopup}
+          setShowPopup={setShowPopup}
+          comments={comments}
+          setComments={setComments}
+        />
       </article>
     </>
   );

@@ -1,8 +1,47 @@
-const AddComment = () => {
+import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
+
+const AddComment = ({
+  post,
+  showPopup,
+  setShowPopup,
+  comments,
+  setComments,
+}) => {
+  const [comment, setComment] = useState("");
+  const { auth } = useAuth();
+  const { api } = useAxios();
+
+  const addComment = async (e) => {
+    if (!auth?.user?._id) {
+      setShowPopup(true);
+      return;
+    }
+    const keyCode = event.keyCode;
+
+    if (keyCode === 13) {
+      try {
+        const response = await api.post(
+          `${import.meta.env.VITE_SERVER_BASE_URL}/posts/${post?._id}/comment`,
+          { text: comment }
+        );
+
+        if (response.status === 201) {
+          setComments([...comments, response?.data?.comment]);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
   return (
     <div className="px-3 mt-2 flex justify-between items-center">
       <input
         type="text"
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        onKeyDown={(e) => addComment(e)}
         placeholder="Add a comment..."
         className="text-sm w-full outline-none"
       />
