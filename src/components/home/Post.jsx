@@ -42,7 +42,9 @@ const Post = ({ post, showPopup, setShowPopup }) => {
         <PostCaption userName={post?.user?.name} caption={post?.caption} />
 
         {/* Comments */}
-        {comments.length > 0 && <CommentsCount allComments={comments.length} />}
+        {comments.length > 0 && (
+          <CommentsCount allComments={comments.length} postId={post?._id} />
+        )}
         {/* Add Comment */}
         <AddComment
           post={post}

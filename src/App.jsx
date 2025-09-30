@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "post-details",
+        path: "posts/:postId",
         element: (
           <PrivateRoute>
             <PostDetailsPage />
