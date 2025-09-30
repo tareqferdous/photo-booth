@@ -1,18 +1,20 @@
+import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
 import PostActions from "./PostActions";
 import PostComments from "./PostComments";
 import PostDetailsHeader from "./PostDetailsHeader";
-import { useState } from "react";
-import useAxios from "../../hooks/useAxios";
 
 const PostInfo = ({ caption, userInfo, comments, likes, postTime, postId }) => {
   const { auth } = useAuth();
 
   const [comment, setComment] = useState("");
-  const [postComments, setPostComments] = useState(
-    comments.length > 0 ? comments : []
-  );
+  const [postComments, setPostComments] = useState(comments);
   const { api } = useAxios();
+
+  useEffect(() => {
+    setPostComments(comments || []);
+  }, [comments]);
 
   const addComment = async (e) => {
     if (!auth?.user?._id) {
@@ -36,8 +38,6 @@ const PostInfo = ({ caption, userInfo, comments, likes, postTime, postId }) => {
       }
     }
   };
-
-  console.log("postComments", comments);
 
   return (
     <div className="w-full md:w-1/2 flex flex-col">
