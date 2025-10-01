@@ -3,12 +3,18 @@ import { useParams } from "react-router-dom";
 import PostImage from "../components/postDetails/PostImage";
 import PostInfo from "../components/postDetails/PostInfo";
 import PostListCard from "../components/postDetails/PostListCard";
+import { useAuth } from "../hooks/useAuth";
 import useAxios from "../hooks/useAxios";
+import { useProfile } from "../hooks/useProfile";
 
 const PostDetailsPage = () => {
   const { postId } = useParams();
+  const { auth } = useAuth();
   const { api } = useAxios();
+
+  const { state, dispatch } = useProfile();
   const [postDetails, setPostDetails] = useState(null);
+  const [similarPosts, setSimilarPosts] = useState([]);
 
   useEffect(() => {
     const fetchSinglePostDetails = async () => {
@@ -27,7 +33,29 @@ const PostDetailsPage = () => {
     fetchSinglePostDetails();
   }, [postId, api]);
 
-  console.log("postDetails", postDetails);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await api.get(
+          `${import.meta.env.VITE_SERVER_BASE_URL}/posts/user/${
+            postDetails?.userId
+          }`
+        );
+
+        if (response.status === 200) {
+          setSimilarPosts(response?.data?.posts);
+        }
+
+        console.log("response from user posts api", response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProfile();
+  }, [postDetails?.userId, api]);
+
+  console.log("postDetails", similarPosts);
 
   return (
     <div className="max-w-6xl w-full py-10 ml-[var(--sidebar-width)] px-4">
@@ -55,12 +83,11 @@ const PostDetailsPage = () => {
         </h2>
 
         <div className="grid grid-cols-3 gap-1">
-          <PostListCard />
-          <PostListCard />
-          <PostListCard />
-          <PostListCard />
-          <PostListCard />
-          <PostListCard />
+          {similarPosts
+            .filter((post) => post._id !== postId)
+            .map((post) => (
+              <PostListCard key={post._id} post={post} />
+            ))}
         </div>
       </div>
     </div>

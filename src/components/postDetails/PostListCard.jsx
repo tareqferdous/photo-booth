@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
-import Post2 from "../../assets/articles/post-2.jpg";
 
-const PostListCard = () => {
+const PostListCard = ({ post }) => {
   return (
-    <Link to="/post-details">
+    <Link to={`/posts/${post?._id}`}>
       <div className="relative">
-        <img src={Post2} alt="Grid image" className="w-full grid-image" />
+        <img
+          src={`${import.meta.env.VITE_BASE_URL}/${post?.image}`}
+          alt={post?.caption}
+          className="w-full grid-image"
+        />
       </div>
     </Link>
   );
