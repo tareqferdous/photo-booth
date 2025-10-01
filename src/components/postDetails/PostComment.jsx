@@ -6,31 +6,59 @@ const PostComment = ({ comment, setPostComments }) => {
   const { auth } = useAuth();
   const { api } = useAxios();
   const [openMenuId, setOpenMenuId] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedComment, setEditedComment] = useState(comment?.text || "");
 
   const toggleMenu = () => {
     setOpenMenuId(!openMenuId);
   };
-  const handleEdit = (id) => {
-    console.log("Edit comment with id:", id);
-    setOpenMenuId(null);
+  const handleEdit = () => {
+    setIsEditing(true);
+    setEditedComment(comment?.text);
+    setOpenMenuId(false);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (commentId) => {
     try {
       const response = await api.delete(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/posts/comment/${id}`
+        `${import.meta.env.VITE_SERVER_BASE_URL}/posts/comment/${commentId}`
       );
 
       if (response.status === 200) {
         console.log("Comment deleted successfully");
         setPostComments((prevComments) =>
-          prevComments.filter((c) => c._id !== id)
+          prevComments.filter((c) => c._id !== commentId)
         );
         setOpenMenuId(null);
       }
     } catch (error) {
       console.error("Error deleting comment:", error);
     }
+  };
+
+  const handleEditSave = async (commentId) => {
+    try {
+      const response = await api.patch(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/posts/comment/${commentId}`,
+        { text: editedComment }
+      );
+
+      if (response.status === 200) {
+        setPostComments((prevComments) =>
+          prevComments.map((c) =>
+            c._id === commentId ? { ...c, text: editedComment } : c
+          )
+        );
+        setIsEditing(false);
+      }
+    } catch (error) {
+      console.error("Error updating comment:", error);
+    }
+  };
+
+  const handleEditCancel = () => {
+    setIsEditing(false);
+    setEditedComment(comment?.text);
   };
 
   const isMyComment = auth?.user?._id === comment?.user?._id;
@@ -60,7 +88,33 @@ const PostComment = ({ comment, setPostComments }) => {
                 {new Date(comment?.createdAt).toLocaleString()}
               </span>
             </div>
-            <p className="mt-1 text-gray-700">{comment?.text}</p>
+            {isEditing ? (
+              <div className="mt-2">
+                <textarea
+                  value={editedComment}
+                  onChange={(e) => setEditedComment(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                  rows="3"
+                  autoFocus
+                />
+                <div className="flex gap-2 mt-2">
+                  <button
+                    onClick={() => handleEditSave(comment?._id)}
+                    className="px-4 py-1.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={handleEditCancel}
+                    className="px-4 py-1.5 bg-gray-200 text-gray-700 text-sm rounded-lg hover:bg-gray-300 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <p className="mt-1 text-gray-700">{comment?.text}</p>
+            )}
           </div>
 
           <div className="relative">
