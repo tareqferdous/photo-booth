@@ -1,6 +1,6 @@
 import PostComment from "./PostComment";
 
-const PostComments = ({ comments }) => {
+const PostComments = ({ comments, setPostComments }) => {
   return (
     <div className="comments-section flex-grow p-3 border-b border-gray-200">
       {/* Post Owner Comment */}
@@ -8,7 +8,11 @@ const PostComments = ({ comments }) => {
 
       {comments?.length > 0 ? (
         comments.map((comment) => (
-          <PostComment key={comment._id} comment={comment} />
+          <PostComment
+            key={comment._id}
+            comment={comment}
+            setPostComments={setPostComments}
+          />
         ))
       ) : (
         <p className="text-gray-500">No comments yet.</p>

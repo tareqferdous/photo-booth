@@ -55,7 +55,7 @@ const PostDetailsPage = () => {
     fetchProfile();
   }, [postDetails?.userId, api]);
 
-  console.log("postDetails", similarPosts);
+  console.log("postDetails", postDetails);
 
   return (
     <div className="max-w-6xl w-full py-10 ml-[var(--sidebar-width)] px-4">

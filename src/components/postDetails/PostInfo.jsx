@@ -49,7 +49,7 @@ const PostInfo = ({ caption, userInfo, comments, likes, postTime, postId }) => {
       </div>
 
       {/* Comments Section */}
-      <PostComments comments={postComments} />
+      <PostComments comments={postComments} setPostComments={setPostComments} />
 
       {/* Post Actions */}
       <PostActions likes={likes} postTime={postTime} postId={postId} />
