@@ -3,9 +3,11 @@ import { actions } from "../../actions";
 import { useAuth } from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
 import { useProfile } from "../../hooks/useProfile";
+import { useProfileImage } from "../../hooks/useProfileImage";
 
 const ProfilePicture = () => {
   const { state, dispatch } = useProfile();
+  const { setIsProfileImageUpdated } = useProfileImage();
   const { auth } = useAuth();
   const { api } = useAxios();
   const fileUploaderRef = useRef();
@@ -34,6 +36,7 @@ const ProfilePicture = () => {
           type: actions.profile.IMAGE_UPDATED,
           data: response.data,
         });
+        setIsProfileImageUpdated(true);
       }
     } catch (error) {
       dispatch({

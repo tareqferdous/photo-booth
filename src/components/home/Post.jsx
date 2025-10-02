@@ -11,8 +11,9 @@ import PostLikes from "./PostLikes";
 const Post = ({ post, showPopup, setShowPopup }) => {
   const { avatarUrl } = useAvatar(post);
   const [comments, setComments] = useState(post?.comments || []);
-  console.log(post);
-  console.log("comments", comments);
+
+  console.log("post", post);
+
   return (
     <>
       <article className="border border-gray-200 pb-4 mb-4 max-w-[560px] mx-auto rounded-md">
@@ -21,6 +22,7 @@ const Post = ({ post, showPopup, setShowPopup }) => {
           avatarUrl={avatarUrl}
           createdAt={post?.createdAt}
           userName={post?.user?.name}
+          userId={post?.user?._id}
         />
 
         {/* Post Image */}

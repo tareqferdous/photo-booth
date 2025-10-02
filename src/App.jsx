@@ -11,6 +11,7 @@ import ProfilePage from "./pages/ProfilePage";
 import RegistrationPage from "./pages/RegistrationPage";
 import AuthProvider from "./providers/AuthProvider";
 import { PopupProvider } from "./providers/PopupProvider";
+import ProfileImageProvider from "./providers/ProfileImageProvider";
 import ProfileProvider from "./providers/ProfileProvider";
 import PrivateRoute from "./route/PrivateRoute";
 import PublicRoute from "./route/PublicRoute";
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "profile",
+        path: "profile/:userId",
         element: (
           <PrivateRoute>
             <ProfilePage />
@@ -88,9 +89,11 @@ function App() {
   return (
     <AuthProvider>
       <PopupProvider>
-        <ProfileProvider>
-          <RouterProvider router={router} />
-        </ProfileProvider>
+        <ProfileImageProvider>
+          <ProfileProvider>
+            <RouterProvider router={router} />
+          </ProfileProvider>
+        </ProfileImageProvider>
       </PopupProvider>
     </AuthProvider>
   );

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { actions } from "../actions";
 import ProfileHeader from "../components/profile/ProfileHeader";
 import ProfilePost from "../components/profile/ProfilePost";
@@ -9,6 +10,7 @@ import { useProfile } from "../hooks/useProfile";
 const ProfilePage = () => {
   const { api } = useAxios();
   const { auth } = useAuth();
+  const { userId } = useParams();
   const { state, dispatch } = useProfile();
 
   useEffect(() => {
@@ -16,9 +18,7 @@ const ProfilePage = () => {
     const fetchProfile = async () => {
       try {
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/posts/user/${
-            auth?.user?._id
-          }`
+          `${import.meta.env.VITE_SERVER_BASE_URL}/posts/user/${userId}`
         );
 
         if (response.status === 200) {
@@ -33,7 +33,7 @@ const ProfilePage = () => {
     };
 
     fetchProfile();
-  }, [api, auth?.user?._id, dispatch]);
+  }, [api, userId, dispatch]);
 
   const isMe = auth?.user?._id === state?.user?._id;
 
